@@ -82,6 +82,7 @@ module MailCatcher::Mail extend self
     row = @message_query.execute(id).next
     row && Hash[row.fields.zip(row)].tap do |message|
       message["recipients"] &&= ActiveSupport::JSON.decode message["recipients"]
+      message["source"].force_encoding('UTF-8')
     end
   end
 
